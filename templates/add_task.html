@@ -1,37 +1,41 @@
 {% extends 'base.html' %}
 {% block title %} Add {% endblock %}
 {% block content %}
-            <h4 class="text-center my-3 pb-3">Добавить задачу</h4>
-            <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" action="{% url 'confirm_add' %}" method="POST">
-              {% csrf_token %}
-              <div class="col-12">
-                <div class="form-outline">
-                  <label for="description"></label><input required name="description" type="text" id="description" class="form-control" />
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-outline">
-                  <label>
+    <h4 class="text-center my-3 pb-3">Добавить задачу</h4>
+    <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2"
+          action="{% url 'confirm_add' %}" method="POST">
+        {% csrf_token %}
+        <div class="col-12">
+            <div class="form-outline">
+                <label for="description"></label><input required name="description" placeholder="Введите название"
+                                                        type="text" id="description" class="form-control"/>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-outline">
+                <label>
                     <select name='status' class="form-control mt-4">
-                      {% for status in statuses %}
-                        <option value="{{ status.0 }}">{{ status.1 }}</option>
-                      {% endfor %}
+                        {% for status in statuses %}
+                            <option value="{{ status.0 }}">{{ status.1 }}</option>
+                        {% endfor %}
                     </select>
-                  </label>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-outline">
-                  <label for="deadline"></label><input type="date" name="deadline" id="deadline" class="form-control" value="2022-09-19" min="2018-01-01" max="2090-12-31" />
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="form-outline">
-                  <label for="more_info"></label><textarea name="more_info" required id="more_info" class="form-control"></textarea>
-                </div>
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary mt-4">Добавить</button>
-              </div>
-            </form>
+                </label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-outline">
+                <label for="deadline"></label><input type="date" name="deadline" id="deadline" class="form-control"
+                                                     value="2022-09-19" min="2018-01-01" max="2090-12-31"/>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-outline">
+                <label for="more_info"></label><textarea name="more_info" placeholder="Введите описание" required
+                                                         id="more_info" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary mt-4">Добавить</button>
+        </div>
+    </form>
 {% endblock %}

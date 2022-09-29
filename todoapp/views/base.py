@@ -6,6 +6,8 @@ from todoapp.models import Todo
 def index_view(request):
     articles = Todo.objects.all()
     context = {
-        'articles': articles
+        'articles': articles,
+        'statuses': [('new', 'Новая'), ('in process', 'В процессе'),
+                     ('ready', 'Сделано')],
     }
     return render(request, 'main_page.html', context)

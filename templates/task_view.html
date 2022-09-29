@@ -1,34 +1,38 @@
 {% extends 'base.html' %}
 {% block title %} Task {{ task.id }} {% endblock %}
 {% block content %}
-            <h4 class="text-center my-3 pb-3">{{ task.description }}</h4>
-            <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
-              <div class="col-12">
-                <a href="{% url 'main' %}" type="submit" class="btn btn-primary">Главная страница</a>
-              </div>
-             <div class="col-12">
-                <a href="{% url 'edit' task.id %}" type="submit" class="btn btn-warning">Редактировать</a>
-              </div>
-              <div class="col-12">
-                <a href="{% url 'delete' task.id %}" type="submit" class="btn btn-danger">Удалить</a>
-              </div>
-            </form>
-            <table class="table mb-4">
-              <thead>
-                <tr>
-                  <th scope="col">Задача</th>
-                  <th scope="col">Статус</th>
-                  <th scope="col">Дедлайн</th>
-                  <th scope="col">Полное описание</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{ task.description }}</td>
-                  <td>{{ task.status }}</td>
-                  <td>{{ task.deadline|date:'Y-m-d' }}</td>
-                  <td class="text-break">{{ task.more_info|linebreaks }}</td>
-                </tr>
-              </tbody>
-            </table>
+    <h4 class="text-center my-3 pb-3">{{ task.description }}</h4>
+    <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+        <div class="col-12">
+            <a href="{% url 'main' %}" type="submit" class="btn btn-primary">Главная страница</a>
+        </div>
+        <div class="col-12">
+            <a href="{% url 'edit' task.id %}" type="submit" class="btn btn-warning">Редактировать</a>
+        </div>
+        <div class="col-12">
+            <a href="{% url 'delete' task.id %}" type="submit" class="btn btn-danger">Удалить</a>
+        </div>
+    </form>
+    <table class="table mb-4">
+        <thead>
+        <tr>
+            <th scope="col">Задача</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Дедлайн</th>
+            <th scope="col">Полное описание</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ task.description }}</td>
+            {% for status in statuses %}
+               {% if task.status == status.0 %}
+                   <td>{{ status.1 }}</td>
+               {% endif %}
+            {% endfor %}
+            <td>{{ task.deadline|date:'Y-m-d' }}</td>
+            <td class="text-break">{{ task.more_info|linebreaks }}</td>
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}
