@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %} Edit task {% endblock %}
+
+{% block content %}
+            <h4 class="text-center my-3 pb-3">Редактировать Задачу</h4>
+            <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" action="{% url 'confirm_edit' %}" method="POST">
+              {% csrf_token %}
+              <label>
+              <input class="d-none" value="{{article.id}}" name="id">
+              </label>
+              <div class="col-12">
+                <div class="form-outline">
+                  <label for="description"></label><input name="description" required value="{{ article.description }}" type="text" id="description" class="form-control" />
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-outline">
+                  <label>
+                    <select required name='status' class="form-control mt-4">
+                        <option value="" disabled selected hidden>{{article.status}}</option>
+                        <option value="new">new</option>
+                        <option value="in process">in process</option>
+                        <option value="ready">ready</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-outline">
+                  <label for="deadline"></label><input type="date" required name="deadline" id="deadline" class="form-control" value="{{ article.deadline|date:'Y-m-d' }}" min="2018-01-01" max="2090-12-31" />
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-outline">
+                  <label for="more_info"></label><p><textarea name="more_info" required id="more_info" class="form-control">{{ article.more_info }}</textarea></p>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary mt-4">Редактировать</button>
+              </div>
+            </form>
+{% endblock %}
