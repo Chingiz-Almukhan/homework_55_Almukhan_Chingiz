@@ -1,0 +1,42 @@
+{% csrf_token %}
+<label>
+    <input class="d-none" value="{{ article.id }}" name="id">
+</label>
+<div class="col-12">
+    <div class="form-outline">
+        <label for="description"></label><input name="description" placeholder="Введите название" required value="{{ article.description }}"
+                                                type="text" id="description" class="form-control"/>
+    </div>
+</div>
+<div class="col-12">
+    <div class="form-outline">
+        <label>
+            <select required name='status' class="form-control mt-4">
+                {% for status in statuses %}
+                    {% if article.status == status.0 %}
+                        <option selected value="{{ status.0 }}">{{ status.1 }}</option>
+                    {% else %}
+                        <option value="{{ status.0 }}">{{ status.1 }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </label>
+    </div>
+</div>
+<div class="col-12">
+    <div class="form-outline">
+        <label for="deadline"></label><input type="date" required name="deadline" id="deadline"
+                                             class="form-control" value="{{ article.deadline|date:'Y-m-d' }}"
+                                             min="2018-01-01" max="2090-12-31"/>
+    </div>
+</div>
+<div class="col-12">
+    <div class="form-outline">
+        <label for="more_info"></label>
+        <p><textarea name="more_info" placeholder="Введите описание" required id="more_info"
+                     class="form-control">{{ article.more_info }}</textarea></p>
+    </div>
+</div>
+<div class="col-12">
+    <button type="submit" class="btn btn-primary mt-4">{{ button_text }}</button>
+</div>
