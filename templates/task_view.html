@@ -10,7 +10,30 @@
             <a href="{% url 'edit' task.id %}" type="submit" class="btn btn-warning">Редактировать</a>
         </div>
         <div class="col-12">
-            <a href="{% url 'delete' task.id %}" type="submit" class="btn btn-danger">Удалить</a>
+            <div>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Удалить
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Вы уверены?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-12">
+                                    <a href="{% url 'main' %}" type="submit" class="btn btn-primary">Вернуться на
+                                        главную</a>
+                                    <a href="{% url 'delete' task.id %}" type="submit" class="btn btn-danger">Да</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
     <table class="table mb-4">
@@ -26,13 +49,16 @@
         <tr>
             <td>{{ task.description }}</td>
             {% for status in statuses %}
-               {% if task.status == status.0 %}
-                   <td>{{ status.1 }}</td>
-               {% endif %}
+                {% if task.status == status.0 %}
+                    <td>{{ status.1 }}</td>
+                {% endif %}
             {% endfor %}
             <td>{{ task.deadline|date:'Y-m-d' }}</td>
             <td class="text-break">{{ task.more_info|linebreaks }}</td>
         </tr>
         </tbody>
     </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
 {% endblock %}

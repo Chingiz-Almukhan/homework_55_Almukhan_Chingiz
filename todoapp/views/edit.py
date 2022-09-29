@@ -5,7 +5,10 @@ from todoapp.models import Todo
 
 def edit(request, pk):
     articles = Todo.objects.get(pk=pk)
-    context = {'article': articles}
+    context = {'article': articles,
+               'statuses': [('new', 'Новая'), ('in process', 'В процессе'),
+                            ('ready', 'Сделано')],
+               }
     return render(request, 'edit_task.html', context)
 
 

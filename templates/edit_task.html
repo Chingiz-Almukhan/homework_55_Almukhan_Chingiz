@@ -19,10 +19,13 @@
             <div class="form-outline">
                 <label>
                     <select required name='status' class="form-control mt-4">
-                        <option value="" disabled selected hidden>{{ article.status }}</option>
-                        <option value="new">new</option>
-                        <option value="in process">in process</option>
-                        <option value="ready">ready</option>
+                        {% for status in statuses %}
+                            {% if article.status == status.0 %}
+                                <option selected value="{{ status.0 }}">{{ status.1 }}</option>
+                            {% else %}
+                                <option value="{{ status.0 }}">{{ status.1 }}</option>
+                            {% endif %}
+                        {% endfor %}
                     </select>
                 </label>
             </div>
