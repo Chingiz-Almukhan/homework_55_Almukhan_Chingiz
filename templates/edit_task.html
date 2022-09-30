@@ -4,7 +4,7 @@
 {% block content %}
     <h4 class="text-center my-3 pb-3">Редактировать Задачу</h4>
     <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2"
-          action="{% url 'confirm_edit' %}" method="POST">
+          action="{% url 'edit' article.pk %}" method="POST">
         {% include 'partial/add_edit_form.html' with button_text='Редактировать' %}
     </form>
 {% endblock %}
