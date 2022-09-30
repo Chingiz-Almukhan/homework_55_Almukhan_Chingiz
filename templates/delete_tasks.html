@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %} Delete {% endblock %}
+{% block content %}
+    <h4 class="text-center my-3 pb-3">Список Задач</h4>
+    <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2"
+          action="{% url 'multi_delete' %}" method="post">
+        <div class="col-12">
+            <input type="submit" class="btn btn-danger" value="Удалить">
+        </div>
+        {% csrf_token %}
+        <table class="table mb-4">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Задачи</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Дедлайн</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <th scope="row"><label>
+                        <input type="checkbox" name="delete" value="{{ article.id }}">
+                    </label></th>
+                    <td>{{ article.description }}</td>
+                    {% for status in statuses %}
+                        {% if article.status == status.0 %}
+                            <td>{{ status.1 }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td>{{ article.deadline|date:'Y-m-d' }}</td>
+                    <td><a href="{% url 'task' article.pk %}" class="btn btn-dark">Подробнее</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </form>
+{% endblock %}
+
