@@ -1,23 +1,29 @@
 from django.shortcuts import render, redirect
 
+from todoapp.forms import TodoForm
 from todoapp.models import Todo
 
 
 def edit(request, pk):
-    articles = Todo.objects.get(pk=pk)
-    context = {'article': articles,
-               'statuses': [('new', 'Новая'), ('in process', 'В процессе'),
-                            ('ready', 'Сделано')],
-               }
-    return render(request, 'edit_task.html', context)
+    article = Todo.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = TodoForm(initial={
+            'description': article.description,
+            'status': article.status,
+            'deadline': article.deadline,
+            'more_info': article.more_info
 
-
-def confirm_edit(request):
-    pk = request.POST.get('id')
-    articles = Todo.objects.get(pk=pk)
-    articles.description = request.POST.get('description')
-    articles.status = request.POST.get('status')
-    articles.deadline = request.POST.get('deadline')
-    articles.more_info = request.POST.get('more_info')
-    articles.save()
-    return redirect('main')
+        })
+        return render(request, 'edit_task.html', context={'form': form, 'article': article})
+    elif request.method == 'POST':
+        form = TodoForm(data=request.POST)
+        if form.is_valid():
+            article.description = form.cleaned_data['description']
+            article.status = form.cleaned_data["status"]
+            article.deadline = form.cleaned_data['deadline']
+            article.more_info = form.cleaned_data['more_info']
+            print(article.deadline)
+            article.save()
+            return redirect('main')
+        else:
+            return render(request, 'edit_task.html', context={'form': form, 'article': article})
